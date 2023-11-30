@@ -16,12 +16,9 @@ return new class extends Migration
             $table->string('nama');
             $table->string('spesifikasi');
             $table->string('image');
-            $table->string('category');
-            $table->string('added_by')->nullable();
+            $table->foreignId('category_id')->constrained();
+            $table->foreignId('user_id')->constrained();
             $table->timestamps();
-
-            $table->foreign('category')->references('id')->on('categories');
-            $table->foreign('added_by')->references('id')->on('admins');
         });
     }
 

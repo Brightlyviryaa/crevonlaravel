@@ -58,7 +58,7 @@
                             <form action="{{ url('/category/' . $category->id) }}" method="post">
                                 @csrf
                                 @method('DELETE')
-                                <button class="font-medium text-red-600 hover:underline dark:text-red-500"
+                                <button class="font-medium text-red-600 hover:underline dark:text-blue-500"
                                     type="submit">Delete</button>
                             </form>
                         </td>

@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,10 +24,12 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     $totalCategories = Category::count();
-    return view('dashboard', compact('totalCategories'));
+    $totalProducts = Product::count();
+    return view('dashboard', compact('totalCategories', 'totalProducts'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-route::resource('category', CategoryController::class);
+route::resource('category', CategoryController::class)->middleware(['auth', 'verified']);
+route::resource('product', ProductController::class)->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

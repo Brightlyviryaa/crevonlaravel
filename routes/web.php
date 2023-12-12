@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\SearchController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,9 +19,7 @@ use App\Http\Controllers\PageController;
 |
 */
 
-Route::get('/', function () {
-    return view('homepage');
-});
+Route::get('/', [PageController::class, 'index'])->name('home.index');
 
 Route::get('/dashboard', function () {
     $totalCategories = Category::count();
@@ -30,6 +29,7 @@ Route::get('/dashboard', function () {
 
 route::resource('category', CategoryController::class)->middleware(['auth', 'verified']);
 route::resource('product', ProductController::class)->middleware(['auth', 'verified']);
+Route::get('/search', [SearchController::class, 'search'])->name('search');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -38,5 +38,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/about', [PageController::class, 'about'])->name('home.about');
-
+Route::get('/categories', [PageController::class, 'category'])->name('home.category');
+Route::get('/productlist/{id}', [PageController::class, 'productslist'])->name('home.lists');
+Route::get('/show/{id}', [PageController::class, 'product'])->name('home.products');
 require __DIR__.'/auth.php';
